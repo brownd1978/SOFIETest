@@ -1,0 +1,26 @@
+#include "Offline/fcl/minimalMessageService.fcl"
+#include "Offline/fcl/standardServices.fcl"
+#include "Production/JobConfig/reco/prolog.fcl"
+#include "Offline/Mu2eKinKal/fcl/prolog.fcl"
+#include "TrkAna/fcl/prolog.fcl"
+
+process_name: R
+source : { 
+  module_type : EmptyEvent
+		  maxEvents : 1
+}
+physics :
+{
+  producers : {
+  }
+  filters : {
+  }
+  analyzers : {
+    KerasDiag : {
+      module_type : KerasDiag
+      WeightFileName : "SOFIETest/data/KerasModel.dat"
+    }
+  }
+  EndPath : [KerasDiag]
+  TriggerPath : []
+}
