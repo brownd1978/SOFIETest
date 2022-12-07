@@ -3,7 +3,7 @@
 
 #include<algorithm>
 #include<vector>
-#include "TMVA/SOFIE_common.hxx"
+//#include "TMVA/SOFIE_common.hxx"
 #include "SOFIETest/inc/TMVA_SOFIE_KerasModel.hh"
 #include <fstream>
 
