@@ -1,11 +1,11 @@
 //
-// This module calls the TMVA_SOFIE_KerasModel inference function 
+// This module calls the TMVA_SOFIE_TrainBkg inference function 
 // Original author David Brown, 12/2/2022
 //
 // framework
 #include "art/Framework/Principal/Event.h"
 #include "art/Framework/Core/EDAnalyzer.h"
-#include "SOFIETest/inc/TMVA_SOFIE_KerasModel.hh"
+#include "SOFIETest/inc/TrainBkg.hxx"
 #include "Offline/ConfigTools/inc/ConfigFileLookupPolicy.hh"
 #include <iostream>
 
@@ -26,7 +26,7 @@ namespace mu2e {
       void analyze( art::Event const & e) override;
       void beginJob ( ) override;
     private:
-    TMVA_SOFIE_KerasModel::Session* _session;
+    TMVA_SOFIE_TrainBkg::Session* _session;
   };
 
   KerasDiag::KerasDiag(Parameters const& config) :
@@ -34,7 +34,7 @@ namespace mu2e {
   {
     ConfigFileLookupPolicy configFile;
     auto mvaWgtsFile = configFile(config().wname());
-    _session = new TMVA_SOFIE_KerasModel::Session(mvaWgtsFile);
+    _session = new TMVA_SOFIE_TrainBkg::Session(mvaWgtsFile);
   }
 
   KerasDiag::~KerasDiag() {}
@@ -44,7 +44,7 @@ namespace mu2e {
   }
 
   void KerasDiag::analyze(art::Event const& event) {
-    std::vector<float> inputs = {0.7,0.3,0.331,0.9 };
+    std::vector<float> inputs = {0.7,0.3,0.331,21,0.001,0.25,200.0,180.0,500.0 };
     auto outputs = _session->infer(inputs.data());
     std::cout << "Output size " << outputs.size();
     for(size_t ival = 0; ival < outputs.size(); ++ival){
